@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Play, Pause, Download, Sparkles } from "lucide-react";
+import { Play, Pause, Download, Sparkles, Mic } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface InterviewRecord {
@@ -101,34 +101,43 @@ const Admin = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background p-6">
+    <div className="min-h-screen p-6">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Voice Yearbook Admin Dashboard</h1>
-          <p className="text-muted-foreground">
-            Manage and review student voice interviews
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-display font-bold mb-3 text-primary">Voice Yearbook Collection</h1>
+          <p className="text-muted-foreground font-serif text-lg leading-relaxed">
+            Treasured memories and heartfelt stories from our students
           </p>
         </div>
 
         {records.length === 0 ? (
-          <Card>
-            <CardContent className="text-center py-12">
-              <p className="text-muted-foreground text-lg">No interview records found</p>
-              <p className="text-sm text-muted-foreground mt-2">
-                Students can submit interviews to start building the voice yearbook
-              </p>
+          <Card className="shadow-nostalgic border-2 bg-card/80 backdrop-blur-sm">
+            <CardContent className="text-center py-16 bg-nostalgic">
+              <div className="space-y-4">
+                <div className="mx-auto w-16 h-16 bg-primary/15 rounded-full flex items-center justify-center">
+                  <Mic className="w-8 h-8 text-primary" />
+                </div>
+                <p className="text-muted-foreground text-xl font-serif">No stories have been shared yet</p>
+                <p className="text-sm text-muted-foreground mt-2 font-serif">
+                  The yearbook awaits the first heartfelt voice to begin this collection of memories
+                </p>
+              </div>
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-6">
+          <div className="grid gap-8">
             {records.map((record) => (
-              <Card key={record.id} className="w-full">
-                <CardHeader>
+              <Card key={record.id} className="w-full shadow-nostalgic border-2 bg-card/80 backdrop-blur-sm">
+                <CardHeader className="bg-nostalgic border-b">
                   <div className="flex justify-between items-start">
                     <div>
-                      <CardTitle className="text-xl">{record.studentName}</CardTitle>
-                      <CardDescription>
-                        Submitted on {new Date(record.createdAt).toLocaleDateString()}
+                      <CardTitle className="text-2xl font-display text-primary">{record.studentName}</CardTitle>
+                      <CardDescription className="font-serif text-base">
+                        Shared on {new Date(record.createdAt).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'long', 
+                          day: 'numeric' 
+                        })}
                       </CardDescription>
                     </div>
                     <div className="flex gap-2">
@@ -154,18 +163,23 @@ const Admin = () => {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   {record.highlight && (
-                    <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Sparkles className="w-4 h-4 text-primary" />
-                        <span className="font-medium text-primary">AI Generated Highlight</span>
+                    <div className="bg-primary/8 border-2 border-primary/25 rounded-lg p-6 shadow-paper">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Sparkles className="w-5 h-5 text-primary" />
+                        <span className="font-serif font-semibold text-primary">Treasured Quote</span>
                       </div>
-                      <blockquote className="text-lg italic">"{record.highlight}"</blockquote>
+                      <blockquote className="text-xl font-serif italic text-foreground leading-relaxed">
+                        "{record.highlight}"
+                      </blockquote>
                     </div>
                   )}
 
                   {record.audioUrl && (
-                    <div className="space-y-2">
-                      <h4 className="font-medium">Audio Recording</h4>
+                    <div className="space-y-3 bg-accent/10 p-4 rounded-lg border">
+                      <h4 className="font-serif font-semibold text-foreground flex items-center gap-2">
+                        <Play className="w-4 h-4" />
+                        Voice Recording
+                      </h4>
                       <audio controls className="w-full">
                         <source src={record.audioUrl} type="audio/mpeg" />
                         Your browser does not support the audio element.
@@ -175,38 +189,38 @@ const Admin = () => {
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-4">
-                      <div>
-                        <h4 className="font-medium mb-2 flex items-center gap-2">
+                      <div className="bg-secondary/50 p-4 rounded-lg border">
+                        <h4 className="font-serif font-semibold mb-3 flex items-center gap-2 text-primary">
                           Proudest Moment
-                          <Badge variant="secondary">Response</Badge>
+                          <Badge variant="secondary" className="font-serif">Story</Badge>
                         </h4>
-                        <p className="text-muted-foreground">{record.proudMoment}</p>
+                        <p className="text-foreground font-serif leading-relaxed">{record.proudMoment}</p>
                       </div>
                       
-                      <div>
-                        <h4 className="font-medium mb-2 flex items-center gap-2">
+                      <div className="bg-secondary/50 p-4 rounded-lg border">
+                        <h4 className="font-serif font-semibold mb-3 flex items-center gap-2 text-primary">
                           Funniest Memory
-                          <Badge variant="secondary">Response</Badge>
+                          <Badge variant="secondary" className="font-serif">Story</Badge>
                         </h4>
-                        <p className="text-muted-foreground">{record.funniestMemory}</p>
+                        <p className="text-foreground font-serif leading-relaxed">{record.funniestMemory}</p>
                       </div>
                     </div>
 
                     <div className="space-y-4">
-                      <div>
-                        <h4 className="font-medium mb-2 flex items-center gap-2">
-                          Advice to Others
-                          <Badge variant="secondary">Response</Badge>
+                      <div className="bg-secondary/50 p-4 rounded-lg border">
+                        <h4 className="font-serif font-semibold mb-3 flex items-center gap-2 text-primary">
+                          Wisdom to Share
+                          <Badge variant="secondary" className="font-serif">Advice</Badge>
                         </h4>
-                        <p className="text-muted-foreground">{record.advice}</p>
+                        <p className="text-foreground font-serif leading-relaxed">{record.advice}</p>
                       </div>
                       
-                      <div>
-                        <h4 className="font-medium mb-2 flex items-center gap-2">
-                          Favorite Teacher
-                          <Badge variant="secondary">Response</Badge>
+                      <div className="bg-secondary/50 p-4 rounded-lg border">
+                        <h4 className="font-serif font-semibold mb-3 flex items-center gap-2 text-primary">
+                          Beloved Teacher
+                          <Badge variant="secondary" className="font-serif">Appreciation</Badge>
                         </h4>
-                        <p className="text-muted-foreground">{record.favoriteTeacher}</p>
+                        <p className="text-foreground font-serif leading-relaxed">{record.favoriteTeacher}</p>
                       </div>
                     </div>
                   </div>

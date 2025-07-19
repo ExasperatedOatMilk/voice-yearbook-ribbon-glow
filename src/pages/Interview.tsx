@@ -24,49 +24,61 @@ const Interview = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-6">
+    <div className="min-h-screen p-6">
       <div className="max-w-4xl mx-auto">
-        <Card className="w-full">
-          <CardHeader className="text-center">
-            <CardTitle className="text-3xl font-bold">Voice Yearbook Interview</CardTitle>
-            <CardDescription className="text-lg">
-              Share your memories and experiences through voice
+        <Card className="w-full shadow-nostalgic border-2 bg-card/80 backdrop-blur-sm">
+          <CardHeader className="text-center bg-nostalgic rounded-t-lg border-b">
+            <CardTitle className="text-4xl font-display font-bold text-primary mb-2">
+              Voice Yearbook Interview
+            </CardTitle>
+            <CardDescription className="text-lg font-serif text-muted-foreground">
+              Share your memories and experiences through the warmth of your voice
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {!interviewUrl ? (
-              <div className="text-center space-y-4">
-                <div className="mx-auto w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Mic className="w-10 h-10 text-primary" />
+              <div className="text-center space-y-6 py-8">
+                <div className="mx-auto w-24 h-24 bg-primary/15 rounded-full flex items-center justify-center shadow-paper">
+                  <Mic className="w-12 h-12 text-primary" />
                 </div>
-                <p className="text-muted-foreground">
-                  Ready to record your voice interview? Click the button below to begin.
-                </p>
+                <div className="space-y-2">
+                  <p className="text-muted-foreground font-serif text-lg leading-relaxed">
+                    Welcome to your personal voice interview
+                  </p>
+                  <p className="text-sm text-muted-foreground font-serif">
+                    Take a moment to share your story, your wisdom, and your heart through voice
+                  </p>
+                </div>
                 <Button 
                   onClick={startInterview} 
                   disabled={loading}
                   size="lg"
-                  className="px-8"
+                  className="px-10 py-3 font-serif text-lg shadow-warm hover:shadow-nostalgic transition-all duration-300"
                 >
                   {loading ? (
-                    "Starting Interview..."
+                    <span className="flex items-center">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-foreground mr-3"></div>
+                      Starting Your Interview...
+                    </span>
                   ) : (
                     <>
-                      <Play className="w-5 h-5 mr-2" />
-                      Start Voice Interview
+                      <Play className="w-5 h-5 mr-3" />
+                      Begin Voice Interview
                     </>
                   )}
                 </Button>
               </div>
             ) : (
-              <div className="space-y-4">
-                <div className="text-center">
-                  <h3 className="text-xl font-semibold mb-2">Your Interview is Ready!</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Follow the voice prompts to complete your interview.
+              <div className="space-y-6">
+                <div className="text-center bg-nostalgic p-6 rounded-lg border">
+                  <h3 className="text-2xl font-display font-semibold mb-3 text-primary">
+                    Your Interview Awaits
+                  </h3>
+                  <p className="text-muted-foreground font-serif text-lg leading-relaxed">
+                    Take your time and speak from the heart. Each question is an opportunity to share your unique story.
                   </p>
                 </div>
-                <div className="w-full h-96 border rounded-lg overflow-hidden">
+                <div className="w-full h-96 border-2 border-primary/20 rounded-lg overflow-hidden shadow-paper">
                   <iframe
                     src={interviewUrl}
                     className="w-full h-full"
@@ -74,8 +86,8 @@ const Interview = () => {
                     title="Voice Interview"
                   />
                 </div>
-                <div className="text-center text-sm text-muted-foreground">
-                  <p>Your responses will be automatically saved when the interview is complete.</p>
+                <div className="text-center text-sm text-muted-foreground font-serif bg-accent/20 p-4 rounded-lg border">
+                  <p>✨ Your heartfelt responses will be automatically preserved when you complete the interview</p>
                 </div>
               </div>
             )}
